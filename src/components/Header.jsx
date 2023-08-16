@@ -56,12 +56,12 @@ const NavItem = ({ item }) => {
               dropdown ? "block" : "hidden"
             } lg:hidden transition-all duration-500 pt-4 lg:absolute lg:bottom-0 lg:right-0 lg:transform lg:translate-y-full lg:group-hover:block w-max`}
           >
-            <ul className="bg-dark-soft lg:bg-transparent text-center flex flex-col shadow-lg rounded-lg overflow-hidden">
+            <ul className="bg-dark-soft lg:bg-white text-center flex flex-col shadow-lg rounded-lg overflow-hidden">
               {item.items.map((page, index) => (
                 <Link
                   key={index}
                   to={page.href}
-                  className="bg-transparent hover:text-white hover:bg-dark-hard px-4 py-2"
+                  className="bg-dark-soft text-white hover:text-white hover:bg-dark-light px-4 py-2 lg:bg-white lg:text-dark-hard lg:hover:bg-dark-hard"
                 >
                   {page.title}
                 </Link>
@@ -93,7 +93,7 @@ const Header = () => {
     <section className="sticky top-0 left-0 right-0 z-50 bg-white">
       <header className="container mx-auto px-5 flex justify-between py-4 items-center">
         <Link to={"/"}>
-          <img src={images.Logo} alt="Logo HiTech" className="h-6 lg:h-8" />
+          <img src={images.Logo} alt="Logo HiTech" className="h-16" />
         </Link>
         <div className="text-dark-hard z-50 visible lg:hidden">
           {navIsVisible ? (
@@ -125,7 +125,7 @@ const Header = () => {
                     }}
                     className="flex gap-x-1 items-center px-4 transition-all duration-500  group-hover:text-primary"
                   >
-                    <span className="text-white lg:text-dark-hard">
+                    <span className="text-white mt-4 lg:text-dark-hard lg:mt-0">
                       Account
                     </span>
                     <MdKeyboardArrowDown className="text-white lg:text-dark-hard" />
@@ -136,23 +136,33 @@ const Header = () => {
                     } lg:hidden transition-all duration-500 pt-4 lg:absolute lg:bottom-0 lg:right-0 lg:transform lg:translate-y-full lg:group-hover:block w-max`}
                   >
                     <ul className="bg-dark-soft lg:bg-transparent text-center flex flex-col shadow-lg rounded-lg overflow-hidden">
+                      {userState.userInfo?.admin && (
+                        <button
+                          onClick={() => {
+                            navigate("/admin");
+                          }}
+                          type="button"
+                          className="bg-dark-soft text-white border  hover:text-white hover:bg-dark-light lg:bg-white lg:text-dark-hard lg:hover:bg-dark-hard px-4 py-2"
+                        >
+                          Admin Dashboard
+                        </button>
+                      )}
+
                       <button
                         onClick={() => {
                           navigate("/profile");
                         }}
                         type="button"
-                        className="bg-transparent hover:text-white hover:bg-dark-hard px-4 py-2"
+                        className="bg-dark-soft text-white -translate-y-[1px] hover:text-white  hover:bg-dark-light lg:bg-white lg:text-dark-hard lg:hover:bg-dark-hard px-4 py-2"
                       >
                         Profile Page
                       </button>
                       <button
                         onClick={() => {
-                          console.log(userState.userInfo);
                           logOutHandler();
-                          console.log(userState.userInfo);
                         }}
                         type="button"
-                        className="bg-transparent hover:text-white hover:bg-dark-hard px-4 py-2"
+                        className="bg-dark-soft text-white -translate-y-[2px] hover:text-white hover:bg-dark-light lg:bg-white lg:text-dark-hard lg:hover:bg-dark-hard  px-4 py-2"
                       >
                         Log Out
                       </button>

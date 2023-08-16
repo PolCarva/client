@@ -1,11 +1,4 @@
 import React, { useState } from "react";
-import { generateHTML } from "@tiptap/react";
-import parse from "html-react-parser";
-import Bold from "@tiptap/extension-bold";
-import Document from "@tiptap/extension-document";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
-import Italic from "@tiptap/extension-italic";
 
 import MainLayout from "../../components/MainLayout";
 import BreadCrumbs from "../../components/BreadCrumbs";
@@ -15,47 +8,12 @@ import SuggestedPosts from "./container/SuggestedPosts";
 import CommentsContainer from "../../components/comments/CommentsContainer";
 import SocialShareButtons from "../../components/SocialShareButtons";
 import { useQuery } from "@tanstack/react-query";
-import { getSinglePost } from "../../services/index/posts";
+import { getAllPosts, getSinglePost } from "../../services/index/posts";
 import ArticleDetailSkeleton from "./components/ArticleDetailSkeleton";
 import ErrorMessage from "../../components/ErrorMessage";
 import { useSelector } from "react-redux";
-
-const postsData = [
-  {
-    _id: 1,
-    img: images.Post1,
-    title: "Help children get better education",
-    createdAt: "2023-08-01T12:00:00.000Z",
-  },
-  {
-    _id: 2,
-    img: images.Post1,
-    title: "Help children get better education",
-    createdAt: "2023-08-01T12:00:00.000Z",
-  },
-  {
-    _id: 3,
-    img: images.Post1,
-    title: "Help children get better education",
-    createdAt: "2023-08-01T12:00:00.000Z",
-  },
-  {
-    _id: 4,
-    img: images.Post1,
-    title: "Help children get better education",
-    createdAt: "2023-08-01T12:00:00.000Z",
-  },
-];
-
-const tagsData = [
-  "Medical",
-  "Education",
-  "Food",
-  "Lifestyle",
-  "Healthy",
-  "Diet",
-  "Learning",
-];
+import parseJsonToHtml from "../../utils/parseJsonToHtml";
+import Editor from "../../components/editor/Editor";
 
 const ArticleDetailPage = () => {
   const { slug } = useParams();
@@ -74,12 +32,13 @@ const ArticleDetailPage = () => {
         { name: "Blog", link: "/blog" },
         { name: `${data.title}`, link: `/blog/${data.slug}` },
       ]);
-      setBody(
-        parse(
-          generateHTML(data?.body, [Bold, Italic, Document, Paragraph, Text])
-        )
-      );
+      setBody(parseJsonToHtml(data?.body));
     },
+  });
+
+  const { data: postsData } = useQuery({
+    queryFn: () => getAllPosts(),
+    queryKey: ["posts"],
   });
 
   return (
@@ -114,19 +73,25 @@ const ArticleDetailPage = () => {
             <h1 className="text-xl font-medium font-roboto mt-4 text-dark-hard md:text-[26px]">
               {data?.title}
             </h1>
-            <div className="mt-4 prose prose-sm sm:prose-base">{body}</div>
+
+            <div className="w-full">
+              {!isLoading && !isError && (
+                <Editor content={data?.body} editable={false} />
+              )}
+            </div>
 
             <CommentsContainer
               className="mt-10"
               loggedInUserId={userState?.userInfo?._id}
               comments={data?.comments}
+              postSlug={slug}
             />
           </article>
           <div>
             <SuggestedPosts
               header={"Latest Article"}
-              posts={postsData}
-              tags={tagsData}
+              posts={postsData?.data}
+              tags={data?.tags}
               className="mt-8 lg:mt-0 lg:max-w-xs"
             />
             <div className="mt-7">
@@ -134,8 +99,8 @@ const ArticleDetailPage = () => {
                 Share on:
               </h2>
               <SocialShareButtons
-                url={encodeURI("pablo-carvalho.app.web")}
-                title={encodeURIComponent("Pablo Carvalho Portfolio Web")}
+                url={encodeURI(window.location.href)}
+                title={encodeURIComponent(data?.title)}
               />
             </div>
           </div>
