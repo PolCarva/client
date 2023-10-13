@@ -70,7 +70,8 @@ const ManagePosts = () => {
   };
 
   const deletePostHandler = ({ slug, token }) => {
-    mutateDeletePost({ slug, token });
+    if (window.confirm("Are you sure you want to delete this post?"))
+      mutateDeletePost({ slug, token });
   };
 
   return (

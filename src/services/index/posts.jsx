@@ -72,3 +72,21 @@ export const updatePost = async ({ updatedData, slug, token }) => {
     throw new Error(error.message);
   }
 };
+
+export const createPost = async ({ token }) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await api.post(`/api/posts`, {}, config);
+    return data;
+  } catch (error) {
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error(error.message);
+  }
+};
