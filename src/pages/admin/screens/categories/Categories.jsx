@@ -108,7 +108,7 @@ const Categories = () => {
           userState={userState}
         >
           {categoriesData?.data.map((category, index) => (
-            <tr key={index} className={category.isNew && 'opacity-60'}>
+            <tr key={index} className={category.isVisible && 'opacity-60'}>
               <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                 <div className="flex items-center">
                   <p className="text-gray-900 whitespace-no-wrap">
