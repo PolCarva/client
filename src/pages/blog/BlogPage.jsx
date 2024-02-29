@@ -88,9 +88,9 @@ const BlogPage = () => {
                         <ErrorMessage message={t('alerts.somethingWentWrong')} />
                     ) : (
 
-                        data?.data.filter((post) => !post.isVisible).length > 0 ? (
+                        data?.data.filter((post) => !post.isHidden).length > 0 ? (
                             data?.data
-                                .filter((post) => !post.isVisible)
+                                .filter((post) => !post.isHidden)
                                 .map((post) => (
                                     <ArticleCard
                                         key={post._id}
