@@ -107,7 +107,7 @@ const resources = {
             alerts: {
                 invalidUrl: 'URL no válida (http:// o https://)',
                 underConstruction: 'Sitio bajo construcción, algunas características aún no funcionan',
-                dbNotConnected: 'Debido a su costo, la base de datos no está conectada. Si quieres ver la funcionalidad completa, por favor contáctanos.',
+                dbNotConnected: 'Debido a su costo, la base de datos no está almacenando imágenes. Si quieres ver la funcionalidad completa, por favor contáctanos.',
                 somethingWentWrong: 'Oops! Algo salió mal',
                 couldNotFetchPostDetails: 'No se pudieron obtener los detalles del post',
                 nothingHere: '¡Oops! No hay nada aquí',
@@ -403,7 +403,7 @@ const resources = {
             alerts: {
                 invalidUrl: 'URL is not valid (http:// or https://)',
                 underConstruction: 'Site under construction, some features are not working yet',
-                dbNotConnected: 'Due to its cost, the database is not connected. If you want to see full functionality, please contact us.',
+                dbNotConnected: 'Due to its cost, the database is not storaging pictures. If you want to see the full functionality, please contact us.',
                 somethingWentWrong: 'Oops! Something went wrong',
                 couldNotFetchPostDetails: 'Could not fetch post details',
                 nothingHere: 'Oops! Nothing here',
